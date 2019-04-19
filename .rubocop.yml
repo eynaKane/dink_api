@@ -4,6 +4,10 @@ AllCops:
   EnabledByDefault: true
   Exclude:
     - db/schema.rb
+    - vendor/bundle/**/*
+
+Metrics/BlockLength:
+  Exclude:
     - spec/**/*
 
 Metrics/LineLength:
@@ -27,6 +31,10 @@ Style/FrozenStringLiteralComment:
 
 Style/InlineComment:
   Enabled: false
+
+Style/MethodCalledOnDoEndBlock:
+  Exclude:
+    - spec/**/*
 
 Style/MethodCallWithArgsParentheses:
   Enabled: false

@@ -12,5 +12,18 @@
 require 'rails_helper'
 
 RSpec.describe Couple, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let :attributes do
+    FactoryBot.attributes_for(:couple)
+  end
+
+  context 'when a couple is created' do
+    subject :create! do
+      Couple.create!(attributes)
+    end
+
+    it 'creates a couple' do
+      expect { create! }
+        .to change(described_class, :count).by(1)
+    end
+  end
 end

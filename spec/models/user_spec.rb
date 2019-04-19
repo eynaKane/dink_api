@@ -14,5 +14,25 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:couple) do
+    FactoryBot.create(:couple)
+  end
+
+  let :attributes do
+    FactoryBot.attributes_for(
+      :user,
+      couple_id: couple.id
+    )
+  end
+
+  context 'when a user is created' do
+    subject :create! do
+      User.create!(attributes)
+    end
+
+    it 'creates a user' do
+      expect { create! }
+        .to change(described_class, :count).by(1)
+    end
+  end
 end
