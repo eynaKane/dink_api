@@ -15,13 +15,16 @@ class CouplesController < ApplicationController
 
   # POST /couples
   def create
-    @couple = Couple.new(couple_params)
+    @couple = Couple.find_or_create_by!(couple_params)
 
-    if @couple.save
-      render json: @couple, status: :created, location: @couple
-    else
-      render json: @couple.errors, status: :unprocessable_entity
+    @users = users_params.map do |user_params|
+      User.find_or_create_by!(user_params)
     end
+
+    render json: { message: "Hi #{@users.map(&:full_name).join(' & ')}!" },
+      status: :created, location: @couple
+  rescue ActiveRecord::RecordInvalid => error
+    render json: { message: error }, status: :unprocessable_entity
   end
 
   # PATCH/PUT /couples/1
@@ -46,6 +49,20 @@ class CouplesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def couple_params
-      params.require(:couple).permit(:username, :number_of_kids)
+      params.require(:couple).permit(
+        :username, :number_of_kids
+      )
+    end
+
+    def users_params
+      params.require(:couple).require(:users).map do |user_params|
+        user_params.permit(
+          :email,
+          :full_name,
+          :income_cents
+        ).merge(
+          couple: @couple
+        )
+      end
     end
 end

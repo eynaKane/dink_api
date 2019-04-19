@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2019_04_18_230918) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "email", null: false
     t.string "full_name", null: false
     t.integer "income_cents", default: 0, null: false
     t.bigint "couple_id", null: false

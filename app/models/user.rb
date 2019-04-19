@@ -1,6 +1,11 @@
 class User < ApplicationRecord
   belongs_to :couple
 
+  validates :email,
+            presence: true,
+            uniqueness: {
+              scope: :couple
+            }
   validates :full_name,
             presence: true,
             uniqueness: {

@@ -1,5 +1,5 @@
 class Couple < ApplicationRecord
-  has_many :users
+  has_many :users, dependent: :destroy
 
   validates :username,
             presence: true,
@@ -13,6 +13,4 @@ class Couple < ApplicationRecord
               greater_than_or_equal_to: 0,
               only_integer: true
             }
-
-  validates_associated :users
 end
