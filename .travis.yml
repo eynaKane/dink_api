@@ -2,10 +2,15 @@ language: ruby
 rvm:
  - 2.5.5
 
+before_install:
+  - gem install bundler --conservative
+  - bundle check || bundle install
+
 services:
   - postgresql
 
 script:
+  - gem install bundler:1.17.3
   - bin/setup
   - bundle exec rspec
   - bundle exec rubocop
