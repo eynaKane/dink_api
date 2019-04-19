@@ -11,7 +11,7 @@
 
 FactoryBot.define do
   factory :couple do
-    username { Faker::Internet.username(8) }
+    username { Faker::Internet.username(6..20) }
     number_of_kids { 0 }
   end
 end
