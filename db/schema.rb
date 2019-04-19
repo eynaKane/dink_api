@@ -16,17 +16,17 @@ ActiveRecord::Schema.define(version: 2019_04_18_230918) do
   enable_extension "plpgsql"
 
   create_table "couples", force: :cascade do |t|
-    t.string "username"
-    t.integer "number_of_kids"
+    t.string "username", null: false
+    t.integer "number_of_kids", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["username"], name: "index_couples_on_username", unique: true
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "full_name"
-    t.integer "income_cents"
-    t.bigint "couple_id"
+    t.string "full_name", null: false
+    t.integer "income_cents", default: 0, null: false
+    t.bigint "couple_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["couple_id"], name: "index_users_on_couple_id"
