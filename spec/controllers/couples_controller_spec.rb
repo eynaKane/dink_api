@@ -83,6 +83,25 @@ RSpec.describe CouplesController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid params' do
+      let :reckoner_response do
+        {
+          dink_reckoner: '84%',
+          message: 'Okay, now you can talk about marriage!'
+        }
+      end
+
+      before do
+        reckoner = double
+
+        allow(Couples::Reckoner).to(
+          receive(:new).and_return(reckoner)
+        )
+
+        allow(reckoner).to(
+          receive(:perform).and_return(reckoner_response)
+        )
+      end
+
       it 'creates a new Couple' do
         expect do
           post :create, params: { couple: valid_post_params }, session: valid_session

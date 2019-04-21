@@ -22,13 +22,13 @@ class CouplesController < ApplicationController
     response = Couples::Reckoner.new(users).perform
 
     render json: {
-             message: "Hi #{users.map(&:full_name).join(' & ')}!",
-             dink_reckoner: response['dink_reckoner'],
-             dink_evaluation: response['message']
-           },
+      message: "Hi #{users.map(&:full_name).join(' & ')}!",
+      dink_reckoner: response['dink_reckoner'],
+      dink_evaluation: response['message']
+    },
            status: :created,
            location: @couple
-  rescue ActiveRecord::RecordInvalid => e
+  rescue ActiveRecord::RecordInvalid, Errno::ECONNREFUSED => e
     render json: { message: e }, status: :unprocessable_entity
   end
 
