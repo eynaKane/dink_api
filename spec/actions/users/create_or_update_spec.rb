@@ -8,11 +8,11 @@ RSpec.describe Users::CreateOrUpdate do
       FactoryBot.attributes_for(
         :user,
         couple_id: couple.id
-      ),
+      ).with_indifferent_access,
       FactoryBot.attributes_for(
         :user,
         couple_id: couple.id
-      )
+      ).with_indifferent_access
     ]
   end
 
@@ -26,6 +26,18 @@ RSpec.describe Users::CreateOrUpdate do
         expect do
           subject
         end.to change(User, :count).by(2)
+      end
+    end
+
+    context 'with existing users' do
+      let! :user do
+        FactoryBot.create(:user, users_params[0])
+      end
+
+      it 'updates the users' do
+        expect do
+          subject
+        end.to change(User, :count).by(1)
       end
     end
   end

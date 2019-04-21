@@ -11,7 +11,7 @@ module Users
         user = User.find_by(email: user_params['email'])
 
         if user
-          user.update(user_params)
+          user.update!(user_params)
         else
           user = User.create!(user_params)
         end

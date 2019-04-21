@@ -15,7 +15,7 @@ class CouplesController < ApplicationController
 
   # POST /couples
   def create
-    @couple = Couple.find_or_create_by!(couple_params)
+    @couple = Couples::CreateOrUpdate.new(couple_params).perform
 
     users = Users::CreateOrUpdate.new(users_params).perform
 
