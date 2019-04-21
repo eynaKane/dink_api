@@ -1,4 +1,4 @@
-RSpec.describe Users::FindOrCreate do
+RSpec.describe Users::CreateOrUpdate do
   let :couple do
     FactoryBot.create(:couple)
   end

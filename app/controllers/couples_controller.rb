@@ -17,7 +17,7 @@ class CouplesController < ApplicationController
   def create
     @couple = Couple.find_or_create_by!(couple_params)
 
-    users = Users::FindOrCreate.new(users_params).perform
+    users = Users::CreateOrUpdate.new(users_params).perform
 
     response = Couples::Reckoner.new(users).perform
 
@@ -26,7 +26,7 @@ class CouplesController < ApplicationController
       dink_reckoner: response['dink_reckoner'],
       dink_evaluation: response['message']
     },
-           status: :created,
+           status: :ok,
            location: @couple
   rescue ActiveRecord::RecordInvalid, Errno::ECONNREFUSED => e
     render json: { message: e }, status: :unprocessable_entity

@@ -110,7 +110,7 @@ RSpec.describe CouplesController, type: :controller do
 
       it 'renders a JSON response with the new couple' do
         post :create, params: { couple: valid_post_params }, session: valid_session
-        expect(response).to have_http_status(:created)
+        expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq('application/json')
         expect(response.location).to eq(couple_url(Couple.last))
       end
