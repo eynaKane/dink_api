@@ -17,12 +17,15 @@ class CouplesController < ApplicationController
   def create
     @couple = Couple.find_or_create_by!(couple_params)
 
-    @users =
-      users_params.map do |user_params|
-        User.find_or_create_by!(user_params)
-      end
+    users = Users::FindOrCreate.new(users_params).perform
 
-    render json: { message: "Hi #{@users.map(&:full_name).join(' & ')}!" },
+    response = Couples::Reckoner.new(users).perform
+
+    render json: {
+             message: "Hi #{users.map(&:full_name).join(' & ')}!",
+             dink_reckoner: response['dink_reckoner'],
+             dink_evaluation: response['message']
+           },
            status: :created,
            location: @couple
   rescue ActiveRecord::RecordInvalid => e
