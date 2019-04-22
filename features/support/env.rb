@@ -1,6 +1,7 @@
 ENV['RAILS_ENV'] = 'test'
 require './config/environment'
 
+require 'database_cleaner'
 require 'minitest/spec'
 require 'rspec/rails'
 require 'spinach/rspec/mocks'
