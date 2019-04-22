@@ -9,6 +9,7 @@ script:
   - bin/setup
   - bundle exec rspec
   - bundle exec rubocop
+  - bundle exec spinach
 
 notifications:
   email:
