@@ -67,8 +67,7 @@ module Spinach
       def initialize(payload)
         post(
           '/couples',
-          params: payload,
-          headers: { 'Accept': 'application/json' }
+          params: payload
         )
       end
     end
