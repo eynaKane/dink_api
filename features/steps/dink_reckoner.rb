@@ -14,8 +14,12 @@ module Spinach
           .and_return(reckoner_response.as_json)
       end
 
-      step 'a couple' do
+      step 'a valid couple' do
         @couple = FactoryBot.attributes_for(:couple)
+      end
+
+      step 'an invalid couple' do
+        @couple = FactoryBot.attributes_for(:couple, username: nil)
       end
 
       step 'users information' do
@@ -31,9 +35,16 @@ module Spinach
 
       step 'the response is successful' do
         expect(response.code).to eq('200')
+        expect(response.message).to eq('OK')
         expect(response.body).to match(/Hi /)
         expect(response.body).to match(/dink_reckoner/)
         expect(response.body).to match(/dink_evaluation/)
+      end
+
+      step 'the response is unsuccessful' do
+        expect(response.code).to eq('422')
+        expect(response.message).to eq('Unprocessable Entity')
+        expect(response.body).to match(/Validation failed/)
       end
 
       private

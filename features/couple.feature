@@ -4,7 +4,13 @@ Feature: DINK Reckoner
   I want to POST to the Couple API
 
 Scenario: Valid couple and user details
-  Given a couple
+  Given a valid couple
   And users information
   When I post the couple payload
   Then the response is successful
+
+Scenario: Invalid couple and user details
+  Given an invalid couple
+  And users information
+  When I post the couple payload
+  Then the response is unsuccessful
